@@ -1,0 +1,287 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<link rel="stylesheet" type="text/css" href="lab07.css">
+<meta charset="utf-8">
+<meta http-equiv="content-type" content="text/html; charset=utf-8" />
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js">
+<meta http-equiv="content-type" content="text/html; charset=utf-8" /> 
+
+</script>
+
+
+<script>
+
+$(document).ready(function(){
+
+$("#createNew").click(function(){
+
+//create form and submit button
+var formm = document.createElement("form");                       
+var b = document.createElement("Button");
+var t = document.createTextNode("Submit");    
+b.appendChild(t);
+formm.appendChild(b);
+
+
+//function to create textfield
+
+$("#createtextNo").click(function()
+{
+var text1 = document.createElement("input");
+text1.type="text";
+var lab1=document.createElement("label");
+
+ var val=prompt("Enter name");
+text1.setAttribute("id",val);
+var t1 = document.createTextNode(val);   
+lab1.appendChild(t1);
+
+
+
+formm.appendChild(text1);
+formm.appendChild(lab1);
+
+     
+});
+
+
+$("#createtextAlpha").click(function()
+{
+var text12 = document.createElement("input");
+text12.type="text";
+var lab12=document.createElement("label");
+
+ var val=prompt("Enter name");
+
+ text12.setAttribute("id",val);
+
+
+
+	var maxi=prompt("enter value of max length");
+	text12.setAttribute("maxlength",maxi);
+
+var t12 = document.createTextNode(val);   
+lab12.appendChild(t12);
+var some=prompt("enter your value");
+ var letters = /^[A-Za-z]+$/;  
+   if(some.match(letters))  
+     {  
+   alert("Correct")
+     }  
+   else  
+     {  
+    alert("please enter an alphabet"); 
+    }
+
+
+formm.appendChild(text12);
+formm.appendChild(lab12);
+
+
+     }
+);
+
+//function to create password
+$("#createpass").click(function()
+{
+var text2 = document.createElement("input");
+text2.type="password";
+var lab2=document.createElement("label");
+var t2 = document.createTextNode("Password");    
+lab2.appendChild(t2);
+
+formm.appendChild(text2);
+formm.appendChild(lab2);
+     
+});
+
+
+//function to create Radio Buttons
+$("#createradio").click(function()
+{
+var text3 = document.createElement("input");
+text3.type="radio";
+text3.name="r1";
+var label1=document.createElement("label");
+
+var lab3=document.createElement("label");
+var val=prompt("Enter name of radio button 1");
+var v1=prompt("do you want it to be checked enter true or false");
+
+text3.setAttribute("checked",v1);
+var t3 = document.createTextNode(val);    
+lab3.appendChild(t3);
+formm.appendChild(text3);
+formm.appendChild(lab3);
+var val2=prompt("Enter name of radio button 2");
+var text4 = document.createElement("input");
+text4.type="radio";
+text4.name="r1";
+var lab4=document.createElement("label");
+
+var t4 = document.createTextNode(val2);    
+lab4.appendChild(t4);
+formm.appendChild(text4);
+     formm.appendChild(lab4);
+});
+
+
+$("#createselect").click(function()
+{
+
+var text5 = document.createElement("Select");
+var text6 = document.createElement("option");
+var t1=prompt("enter name of check box 1")
+text6.appendChild(document.createTextNode(t1));
+text5.add(text6);
+
+var text7 = document.createElement("option");
+var t2=prompt("enter name of check boxe 2")
+text7.appendChild(document.createTextNode(t2));
+text5.add(text7);
+
+
+var text8 = document.createElement("option");
+var t3=prompt("enter name of check box 3")
+text8.appendChild(document.createTextNode(t3));
+text5.add(text8);
+
+formm.appendChild(text5);
+});
+
+$("#createcheck").click(function()
+{
+var text7 = document.createElement("input");
+text7.type="checkbox";
+var lab5=document.createElement("label");
+var x=prompt("Enter name of check box 1");
+var t5 = document.createTextNode(x);    
+lab5.appendChild(t5);
+
+formm.appendChild(text7);
+formm.appendChild(lab5);
+
+var text8 = document.createElement("input");
+text8.type="checkbox";
+var lab6=document.createElement("label");
+var y=prompt("Enter name of check box 2");
+var t6 = document.createTextNode(y);    
+lab6.appendChild(t6);
+formm.appendChild(text8);
+     formm.appendChild(lab6);
+});
+
+
+
+                                        
+document.getElementById("myDiv").appendChild(formm);  
+}
+);
+
+
+
+
+
+
+
+function getAttrs(DOMelement) {
+    var obj = {};
+    $.each(DOMelement.attributes, function () {
+        if (this.specified) {
+            obj[this.name] = this.value;
+        }
+    });
+    return obj;
+}
+//funtion to put elements in json
+$("#button44").click(function()  {
+$("form").each(function () {
+    var json = {
+        "form": []
+    };
+    $(this).find("input").each(function () {
+        json.form.push(getAttrs(this));
+    });
+/*
+    $(this).find("select").each(function () {
+        var select = getAttrs(this);
+        select["type"] = "select";
+        var options = [];
+        $(this).children().each(function () {
+            options.push(getAttrs(this));
+        });
+        select["options"] = options;
+        json.form.push(select);
+    });
+*/
+    console.log(json);
+	  var updateLocalData=   localStorage.setItem('form',JSON.stringify(json)); 
+	  //storing data in local storage
+	formData=JSON.parse(localStorage.getItem('form'));
+	document.getElementById("buildform").innerHTML=formData[0];
+	//alert(formData);
+	 
+	
+});
+});
+
+$("somebutton").click(function()
+{
+ 
+ 
+  
+
+
+
+});
+
+});
+
+//save data in localstorage
+
+//var updateLocalData= function(data){    localStorage.setItem('form',JSON.stringify(data));     }
+
+
+//Load JSON data from local storage
+/*
+var getLocalData=function()
+{
+
+var formData=JSON.parse(localStorage.getItem('form'));
+if(formData!=NULL)
+{
+
+return buildForm(formData);
+}
+
+
+}
+
+var buildForm(formData)   {}
+*/
+</script>
+
+<body>
+<div id="header"> Create a form  </div> 
+<div id="divButton">   </div>
+
+<div id="myDiv">           </div>
+<div align="center" >
+<button id="createNew"> Create Form!   </button>
+</div>
+<div align="center">
+<button id="createtextNo" > Create numeric TextField   </button>
+<button id="createtextAlpha" > Create alphabetical TextField   </button>
+<button id="createpass"> Create Password   </button>
+<button id="createradio"> Create Radio Buttons   </button>
+<button id="createselect"> Create Select Button   </button>
+<button id="createcheck"> Create Check Buttons!   </button>
+
+ <button id="button44"> Click to save in JSON </button>
+ <button id="somebutton"> rebuild form </button>
+ <p id="buildform">  </p>
+</div>
+</body>
+
+</html>
